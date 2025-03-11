@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <div>
       <AdminTopbar />
-      <div className="container mt-4">
+      <div className="container-fluid mt-4">
         <Outlet />
       </div>
     </div>

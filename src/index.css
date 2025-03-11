@@ -32,16 +32,11 @@ box-sizing: border-box;
 body {
   margin: 0;
   padding: 0;
-  display: flex;
   place-items: center;
-  min-width: 320px;
   min-height: 100vh;
-  display:flex;
-  flex-direction: column;
   background-image: url('../../src/assets/FLObackground.png');
   background-repeat: no-repeat;
   background-size: cover;
-  overflow: hidden;
 }
 
 h1 {

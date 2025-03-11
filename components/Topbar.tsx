@@ -30,7 +30,7 @@ const Topbar = () => {
             >
               ☰
             </button>
-            <a className="navbar-brand" onClick={() => navigate("/")}>
+            <a className="navbar-brand" onClick={() => navigate("/home")}>
               Lost & Found
             </a>
           </div>
@@ -69,7 +69,7 @@ const Topbar = () => {
           <ul className="nav flex-column w-100">
             <li className="nav-item">
               <NavLink
-                to="/"
+                to="/home"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
                 }

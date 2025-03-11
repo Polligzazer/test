@@ -27,8 +27,19 @@ const Report = () => {
 
   return (
     <div className="container">
-      <div className="d-flex">
-        <h1 className="text-3xl font-bold text-center mt-8">Report Lost Item</h1>
+      <div className="d-flex justify-content-between align-items-center">
+        <h1 className="text-center">Report Lost Item</h1>
+        <div className="">
+          <button className="btn border-0">
+            <a href="" className="text-decoration-none fw-normal">Report forms</a>
+          </button>
+          <button className="btn border-0">
+            <a href="" className="text-decoration-none fw-normal">Pending claims</a>
+          </button>
+          <button className="btn btn-outline-primary border-0">
+            <a href="" className="text-decoration-none fw-normal">Claimed</a>
+          </button>
+        </div>
       </div>
       <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
         <form onSubmit={handleSubmit} className="space-y-4">
