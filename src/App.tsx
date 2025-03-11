@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "../components/Layout";
+import AdminLayout from "../components/AdminLayout";
 import Signup from "../components/signup";
 import Login from "../components/login";
 import ResetPassword from "../components/resetpassword";
@@ -29,8 +30,12 @@ function App() {
           <Route path="/report" element={<Report />} />
           <Route path="/item-history" element={<ItemHistory />} />
         </Route>
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/reportapproval" element={<AdminApproval />} />
+        <Route
+         element={<AdminLayout />}
+        >
+          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/reportapproval" element={<AdminApproval />} />
+        </Route>
       </Routes>
     </Router>
   );

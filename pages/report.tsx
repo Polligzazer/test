@@ -26,16 +26,21 @@ const Report = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Report a Lost Item</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required className="w-full p-2 border rounded" />
-        <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required className="w-full p-2 border rounded" />
-        <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} required className="w-full p-2 border rounded" />
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="w-full p-2 border rounded" />
-        {/* <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} required className="w-full p-2 border rounded" /> */}
-        <button type="submit" disabled={loading} className="w-full bg-blue-500 text-white py-2 rounded">{loading ? "Submitting..." : "Submit Report"}</button>
-      </form>
+    <div className="container">
+      <div className="d-flex">
+        <h1 className="text-3xl font-bold text-center mt-8">Report Lost Item</h1>
+      </div>
+      <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input type="text" placeholder="Lost Item" value={category} onChange={(e) => setCategory(e.target.value)} required className="w-100 p-2 border rounded" />
+          <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required className="w-100 p-2 border rounded" />
+          <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required className="w-100 p-2 border rounded" />
+          <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} required className="w-100 p-2 border rounded" />
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="w-100 p-2 border rounded" />
+          {/* <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} required className="w-full p-2 border rounded" /> */}
+          <button type="submit" disabled={loading} className="bg-primary text-light py-2 rounded">{loading ? "Submitting..." : "Submit Report"}</button>
+        </form>
+      </div>
     </div>
   );
 };

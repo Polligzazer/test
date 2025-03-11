@@ -4,7 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { NavLink } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const Topbar = () => {
+const AdminTopbar = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -102,6 +102,29 @@ const Topbar = () => {
                 Item History
               </NavLink>
             </li>
+            
+            <li className="nav-item">
+              <NavLink
+                to="/item-history"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
+                }
+                onClick={() => setSidebarOpen(false)}
+              >
+                Item History
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/item-history"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
+                }
+                onClick={() => setSidebarOpen(false)}
+              >
+                Item History
+              </NavLink>
+            </li>
           </ul>
 
           {/* Logout Button at Bottom */}
@@ -119,4 +142,4 @@ const Topbar = () => {
   );
 };
 
-export default Topbar;
+export default AdminTopbar;

@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Topbar from "./Topbar";
+import AdminTopbar from "./AdminTopbar";
 
 const Layout = () => {
   return (
     <div>
-      <Topbar />
+      <AdminTopbar />
       <div className="container mt-4">
         <Outlet />
       </div>
