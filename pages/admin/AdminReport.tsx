@@ -1,9 +1,9 @@
 import { useState } from "react";
-import ReportForms from "./report/ReportForms";
-import PendingClaims from "./report/PendingClaims";
-import Claimed from "./report/Claimed";
+import ReportForms from "../report/ReportForms";
+import PendingClaims from "../report/PendingClaims";
+import Claimed from "../report/Claimed";
 
-const Report = () => {
+const AdminReport = () => {
   const [activeTab, setActiveTab] = useState("reportForms");
 
   const renderContent = () => {
@@ -22,7 +22,7 @@ const Report = () => {
   const getHeadingText = () => {
     switch (activeTab) {
       case "reportForms":
-        return "Report Item";
+        return "Report Lost Item";
       case "pendingClaims":
         return "Pending Claims";
       case "claimed":
@@ -60,4 +60,4 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default AdminReport;

@@ -1,7 +1,7 @@
 const ItemHistory = () => {
   return (
-      <div className="container mt-4">
-          <h1 className="text-primary">Item History</h1>
+      <div className="container mt-5">
+          <h1 className="text-primary py-5">Item History</h1>
       </div>
   );
 }

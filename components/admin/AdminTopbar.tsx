@@ -12,7 +12,6 @@ const AdminTopbar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      alert("Logged out successfully");
       navigate("/");
     } catch (error) {
       alert("Error logging out");
@@ -21,7 +20,7 @@ const AdminTopbar = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-dark bg-primary">
+      <nav className="navbar navbar-dark bg-primary fixed-top">
         <div className="container-fluid">
           <div className="align-items-center d-flex">
             <button
@@ -69,7 +68,19 @@ const AdminTopbar = () => {
           <ul className="nav flex-column w-100">
             <li className="nav-item">
               <NavLink
-                to="/"
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
+                }
+                onClick={() => setSidebarOpen(false)}
+              >
+                Dashboard
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              <NavLink
+                to="/admin"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
                 }
@@ -81,7 +92,7 @@ const AdminTopbar = () => {
 
             <li className="nav-item">
               <NavLink
-                to="/report"
+                to="/adminreport"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
                 }
@@ -105,24 +116,13 @@ const AdminTopbar = () => {
             
             <li className="nav-item">
               <NavLink
-                to="/item-history"
+                to="/user-list"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
                 }
                 onClick={() => setSidebarOpen(false)}
               >
-                Item History
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/item-history"
-                className={({ isActive }) =>
-                  `nav-link ${isActive ? "active text-primary fw-bold" : ""}`
-                }
-                onClick={() => setSidebarOpen(false)}
-              >
-                Item History
+                User List
               </NavLink>
             </li>
           </ul>

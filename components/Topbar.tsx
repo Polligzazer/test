@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../src/firebase";
 import { getAuth, signOut } from "firebase/auth";
+import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { NavLink } from "react-router-dom";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Topbar = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  useEffect(() => {
+    const q = query(
+      collection(db, "notifications"),
+      orderBy("timestamp", "desc")
+    );
+  
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const newNotifications = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(newNotifications);
+      setNotifications(newNotifications);
+    });
+  
+    return () => unsubscribe();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -17,11 +39,13 @@ const Topbar = () => {
     } catch (error) {
       alert("Error logging out");
     }
+     
+
   };
 
   return (
     <div>
-      <nav className="navbar navbar-dark bg-primary">
+      <nav className="navbar navbar-dark bg-primary fixed-top">
         <div className="container-fluid">
           <div className="align-items-center d-flex">
             <button
@@ -35,17 +59,50 @@ const Topbar = () => {
             </a>
           </div>
           <form action="" className="d-flex gap-3 align-items-center">
-            <input type="search" name="search" id="search" className="bg-light border-0 rounded-5" placeholder="Search..." />
+            <input type="search" name="search" id="search" className="bg-light text-dark border-0 rounded-5 px-3 py-1" placeholder="Search..." />
             <button type="submit" className="btn btn-light ">
               <i className="bi bi-search"></i>
             </button>
           </form>
-          <div className="d-flex gap-3">
+          <div className="d-flex me-4 gap-5 position-relative align-items-center">
+            {/* Notification Icon with Badge */}
+            <div className="dropdown position-relative">
+              <a
+                className="position-relative"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{ cursor: "pointer" }}
+              >
+                <i className="bi bi-bell text-light fs-3"></i>
+                {notifications.length > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {notifications.length}
+                  </span>
+                )}
+              </a>
+
+              <ul className="dropdown-menu dropdown-menu-end px-2 py-3" style={{ width: "300px" }}>
+                <li className="dropdown-header text-primary fw-bold fs-5">Notifications</li>
+
+                {notifications.length === 0 ? (
+                  <li className="dropdown-item text-center">No new notifications</li>
+                ) : (
+                  notifications.map((notif) => (
+                    <li key={notif.id} className="dropdown-item">
+                      <strong>{notif.title}</strong>
+                      <p className="small m-0">{notif.description}</p>
+                      <small className="text-muted">
+                      {new Date(notif.timestamp.seconds * 1000).toLocaleString()}
+                      </small>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
+
+            {/* Profile Icon */}
             <a>
-              <i className="bi bi-bell text-light fs-3"></i>
-            </a>
-            <a>
-              <i className="bi bi-person-circle text-light fs-3"></i>
+              <i className="bi bi-person-circle text-light fs-2"></i>
             </a>
           </div>
         </div>

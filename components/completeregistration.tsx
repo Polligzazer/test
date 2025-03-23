@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 const CompleteRegistration: React.FC = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [userUID, setUserUID] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -16,15 +17,16 @@ const CompleteRegistration: React.FC = () => {
     role: "",
     strandOrCourse: "",
     yearSection: "",
-    userId: "",
+    schoolId: "",
   });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user?.email && user.email !== userEmail) {
+        setUserUID(user.uid);
         setUserEmail(user.email);
         const extractedId = user.email.match(/\d+/)?.[0] || "000000";
-        setFormData((prev) => ({ ...prev, userId: `02000${extractedId}` }));
+        setFormData((prev) => ({ ...prev, schoolId: `02000${extractedId}` }));
       }
     });
     return () => unsubscribe();
@@ -41,8 +43,8 @@ const CompleteRegistration: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      if (!userEmail) {
-        alert("User email is not found. Please log in again.");
+      if (!userUID || !userEmail) {
+        alert("User is not authenticated. Please log in again.");
         return;
       }
 
@@ -59,13 +61,20 @@ const CompleteRegistration: React.FC = () => {
         }
       }
 
-      const userRef = doc(db, "users", userEmail);
-      await setDoc(userRef, formData, { merge: true });
+      const userRef = doc(db, "users", userUID);
+      await setDoc(userRef, { 
+        ...formData, 
+        email: userEmail,
+        uid: userUID,
+    }, { merge: true });
 
+    await setDoc(doc(db, "userChats", userUID), {}); // Empty object to initialize chats
+
+    alert("Registration completed successfully!");
       navigate("/home");
-    } catch (error) {
+    } catch (error:any) {
       console.error("🔥 Firestore Error:", error);
-     
+      alert(`Error saving data: ${error.message}`);
     }
   };
 

@@ -50,9 +50,9 @@ export {
   verifyPasswordResetCode 
 };
 
- 
 export const reportLostItem = async (
   userId: string,
+  item: string,
   category: string,
   description: string,
   location: string,
@@ -68,6 +68,7 @@ export const reportLostItem = async (
     // Save report in Firestore
     const docRef = await addDoc(collection(db, "lost_items"), {
       userId,
+      item,
       category,
       description,
       location,
@@ -122,5 +123,25 @@ export const getApprovedReports = async () => {
   const q = query(collection(db, "lost_items"), where("status", "==", "approved"));
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+// Claimed report fetching
+export const getClaimedReports = async () => {
+  const q = query(collection(db, "lost_items"), where("status", "==", "claimed"));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+export const claimLostItem = async (reportId: string, userId: string) => {
+  try {
+    const docRef = doc(db, "lost_items", reportId);
+    await updateDoc(docRef, {
+      status: "claimed",
+      claimedBy: userId,
+    });
+  } catch (error) {
+    console.error("Error claiming lost item:", error);
+    throw error;
+  }
 };
 

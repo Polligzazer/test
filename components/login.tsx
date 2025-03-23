@@ -38,7 +38,7 @@ const Login: React.FC = () => {
       if (user.email === adminEmail) {
         // If it's the admin email, navigate to admin home
         console.log("Admin logged in successfully");
-        navigate("/admin-home");
+        navigate("/admin");
       } else {
         // If it's not the admin email, navigate to the home page
         console.log("User logged in successfully");

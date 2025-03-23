@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../src/firebase";
+import { db } from "../../src/firebase";
 
 const AdminHome = () => {
   const [reports, setReports] = useState<any[]>([]);
